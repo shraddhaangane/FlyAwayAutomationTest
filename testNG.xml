@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Example test run">
+  <test name="Simple Test">
+    <classes>
+      <class name="com.flyaway.signup.FlyAwaySignUpTest"/>
+      <class name="com.flyaway.memberlogin.FlyAwayMemberLoginTest"/>
+      <class name="com.flyaway.dashboard.FlyAwayEditProfileTest"/>
+      <class name="com.flyaway.dashboard.FlyAwayDashboardTest"/>
+      <class name="com.flyaway.flightbooking.FlightBookingTest"/>
+    
+    </classes>
+  </test>
+</suite>
