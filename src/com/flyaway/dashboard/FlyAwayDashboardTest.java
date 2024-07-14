@@ -23,12 +23,12 @@ public class FlyAwayDashboardTest {
 
 		driver.findElement(By.xpath("//a[@href=\"login\"]")).click();
 		loginHandler.setMemberloginPage(driver, EMAILID, PASSWORD);
-		String MessageExpected = "FLYAWAY - DASHBOARD";
+		String messageExpected = "FLYAWAY - DASHBOARD";
 		WebElement dashboardtagname = driver.findElement(By.tagName("h3"));
-		String MessageActual = dashboardtagname.getText();
+		String messageActual = dashboardtagname.getText();
 
 		driver.close();
-		Assert.assertEquals(MessageExpected, MessageActual);
+		Assert.assertEquals(messageExpected, messageActual);
 	}
 
 	// Verify member should able view Home page

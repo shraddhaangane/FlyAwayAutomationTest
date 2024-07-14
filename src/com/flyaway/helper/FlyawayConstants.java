@@ -14,6 +14,11 @@ public class FlyawayConstants {
 	
 	public static final String LINK_TEXT_LOGIN_SIGNUP_BUTTON = "//a[@href=\"login\"]";
 	public static final String SIGN_UP_LINK="//a[@href=\"signup\"]";
+	public static final String XPATH_HOME_LINK = "//a[@href=\"home\"]";
+	public static final String XPATH_LOGIN_LINK = "//a[@href=\"login\"]";
+	public static final String XPATH_EDIT_PROFILE_LINK = "//a[@href=\"editprofile\"]";
+	public static final String XPATH_BOOK_FLIGHT_LINK = "//*[contains(@href,'bookflight')]";
+	public static final String XPATH_SUBMIT_BUTTON_LINK = "//button[text()='Submit']";
 	
 	public static final String MESSAGE_INVALID_EMAIL="Email id is required.";
 	public static final String MESSAGE_EMAIL_EXITS="This email id already exists.";
@@ -29,5 +34,8 @@ public class FlyawayConstants {
 	public static final String HYDERABAD = "Hyderabad";
 	public static final String CHENNAI="Chennai";
 	
-	
+	public static final String SOURCE = "source";
+	public static final String DESTINATION = "destination";
+
+	private FlyawayConstants(){}
 }

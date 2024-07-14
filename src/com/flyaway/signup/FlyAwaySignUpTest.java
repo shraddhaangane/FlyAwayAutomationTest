@@ -7,12 +7,15 @@ import static org.testng.Assert.assertTrue;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import com.flyaway.handler.FlyawayCommonHandler;
 import com.flyaway.handler.FlyawaySignUpHandler;
 
 public class FlyAwaySignUpTest {
+	private static final Logger log = LoggerFactory.getLogger(FlyAwaySignUpTest.class);
 	FlyawayCommonHandler commonHandler = new FlyawayCommonHandler();
 	FlyawaySignUpHandler signUpHandler = new FlyawaySignUpHandler();
 
@@ -104,7 +107,7 @@ public class FlyAwaySignUpTest {
 	}
 
 	private void validateErrorMessage(WebDriver driver, String expectedErrorMessage) {
-		System.out.println("expectedErrorMessage==> " + expectedErrorMessage);
+		log.info("expectedErrorMessage==> {} ", expectedErrorMessage);
 		assertTrue(driver.findElement(By.tagName("body")).getAttribute("innerHTML").contains(expectedErrorMessage));
 	}
 

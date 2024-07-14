@@ -2,15 +2,21 @@ package com.flyaway.flightbooking;
 
 import static com.flyaway.helper.FlyawayConstants.*;
 import static org.testng.Assert.assertTrue;
+
+import groovy.util.logging.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import com.flyaway.handler.FlyawayCommonHandler;
 import com.flyaway.handler.FlyawayMemberLoginHandler;
 
+@Slf4j
 public class FlightBookingTest {
 
+	private static final Logger log = LoggerFactory.getLogger(FlightBookingTest.class);
 	FlyawayCommonHandler commonHandler = new FlyawayCommonHandler();
 	FlyawayMemberLoginHandler loginHandler = new FlyawayMemberLoginHandler();
 
@@ -19,14 +25,14 @@ public class FlightBookingTest {
 	public void verifyMemberSelectFlightFromDropdown() {
 		WebDriver driver = commonHandler.homePage();
 
-		driver.findElement(By.xpath("//a[@href=\"login\"]")).click();
+		driver.findElement(By.xpath(XPATH_LOGIN_LINK)).click();
 		loginHandler.setMemberloginPage(driver, EMAILID, PASSWORD);
-		driver.findElement(By.xpath("//a[@href=\"home\"]")).click();
-		Select selectsource = new Select(driver.findElement(By.name("source")));
+		driver.findElement(By.xpath(XPATH_HOME_LINK)).click();
+		Select selectsource = new Select(driver.findElement(By.name(SOURCE)));
 		selectsource.selectByVisibleText(BANGLORE);
-		Select selectdestination = new Select(driver.findElement(By.name("destination")));
+		Select selectdestination = new Select(driver.findElement(By.name(DESTINATION)));
 		selectdestination.selectByVisibleText(CHENNAI);
-		driver.findElement(By.xpath("//button[text()='Submit']"));
+		driver.findElement(By.xpath(XPATH_SUBMIT_BUTTON_LINK));
 		driver.close();
 	}
 
@@ -35,15 +41,15 @@ public class FlightBookingTest {
 	public void verifyMemberSelectBookflight() {
 		WebDriver driver = commonHandler.homePage();
 
-		driver.findElement(By.xpath("//a[@href=\"login\"]")).click();
+		driver.findElement(By.xpath(XPATH_LOGIN_LINK)).click();
 		loginHandler.setMemberloginPage(driver, EMAILID, PASSWORD);
-		driver.findElement(By.xpath("//a[@href=\"home\"]")).click();
-		Select selectsource = new Select(driver.findElement(By.name("source")));
+		driver.findElement(By.xpath(XPATH_HOME_LINK)).click();
+		Select selectsource = new Select(driver.findElement(By.name(SOURCE)));
 		selectsource.selectByVisibleText(BANGLORE);
-		Select selectdestination = new Select(driver.findElement(By.name("destination")));
+		Select selectdestination = new Select(driver.findElement(By.name(DESTINATION)));
 		selectdestination.selectByVisibleText(CHENNAI);
-		driver.findElement(By.xpath("//button[text()='Submit']")).click();
-		driver.findElement(By.xpath("//*[contains(@href,'bookflight')]")).click();
+		driver.findElement(By.xpath(XPATH_SUBMIT_BUTTON_LINK)).click();
+		driver.findElement(By.xpath(XPATH_BOOK_FLIGHT_LINK)).click();
 		driver.close();
 	}
 
@@ -53,12 +59,12 @@ public class FlightBookingTest {
 	public void verifyMemberSelectOnlySource() {
 		WebDriver driver = commonHandler.homePage();
 
-		driver.findElement(By.xpath("//a[@href=\"login\"]")).click();
+		driver.findElement(By.xpath(XPATH_LOGIN_LINK)).click();
 		loginHandler.setMemberloginPage(driver, EMAILID, PASSWORD);
-		driver.findElement(By.xpath("//a[@href=\"home\"]")).click();
-		Select selectsource = new Select(driver.findElement(By.name("source")));
+		driver.findElement(By.xpath(XPATH_HOME_LINK)).click();
+		Select selectsource = new Select(driver.findElement(By.name(SOURCE)));
 		selectsource.selectByVisibleText(BANGLORE);
-		driver.findElement(By.xpath("//button[text()='Submit']")).click();
+		driver.findElement(By.xpath(XPATH_SUBMIT_BUTTON_LINK)).click();
 		driver.close();
 	}
 
@@ -68,13 +74,13 @@ public class FlightBookingTest {
 	public void verifyMemberSelectOnlyDestination() {
 		WebDriver driver = commonHandler.homePage();
 
-		driver.findElement(By.xpath("//a[@href=\"login\"]")).click();
+		driver.findElement(By.xpath(XPATH_LOGIN_LINK)).click();
 		loginHandler.setMemberloginPage(driver, EMAILID, PASSWORD);
-		driver.findElement(By.xpath("//a[@href=\"home\"]")).click();
-		Select selectdestination = new Select(driver.findElement(By.name("destination")));
+		driver.findElement(By.xpath(XPATH_HOME_LINK)).click();
+		Select selectdestination = new Select(driver.findElement(By.name(DESTINATION)));
 		selectdestination.selectByVisibleText(CHENNAI);
-		driver.findElement(By.xpath("//button[text()='Submit']")).click();
-		driver.findElement(By.xpath("//*[contains(@href,'bookflight')]")).click();
+		driver.findElement(By.xpath(XPATH_SUBMIT_BUTTON_LINK)).click();
+		driver.findElement(By.xpath(XPATH_BOOK_FLIGHT_LINK)).click();
 		driver.close();
 	}
 
@@ -82,12 +88,12 @@ public class FlightBookingTest {
 	@Test(description = "Verify member should not able to book flight without valid login")
 	public void verifyMemberUnableToBookflighWithoutLogin() {
 		WebDriver driver = commonHandler.homePage();
-		Select selectsource = new Select(driver.findElement(By.name("source")));
+		Select selectsource = new Select(driver.findElement(By.name(SOURCE)));
 		selectsource.selectByVisibleText(BANGLORE);
-		Select selectdestination = new Select(driver.findElement(By.name("destination")));
+		Select selectdestination = new Select(driver.findElement(By.name(DESTINATION)));
 		selectdestination.selectByVisibleText(CHENNAI);
-		driver.findElement(By.xpath("//button[text()='Submit']")).click();
-		driver.findElement(By.xpath("//*[contains(@href,'bookflight')]")).click();
+		driver.findElement(By.xpath(XPATH_SUBMIT_BUTTON_LINK)).click();
+		driver.findElement(By.xpath(XPATH_BOOK_FLIGHT_LINK)).click();
 		validateErrorMessage(driver, MESSAGE_ERROR_BOOKING_WITHOUT_LOGIN);
 		driver.close();
 	}
@@ -97,16 +103,16 @@ public class FlightBookingTest {
 	public void verifyMemberBookFlightAndCompletePayment() {
 		WebDriver driver = commonHandler.homePage();
 
-		driver.findElement(By.xpath("//a[@href=\"login\"]")).click();
+		driver.findElement(By.xpath(XPATH_LOGIN_LINK)).click();
 		loginHandler.setMemberloginPage(driver, EMAILID, PASSWORD);
-		driver.findElement(By.xpath("//a[@href=\"home\"]")).click();
-		Select selectsource = new Select(driver.findElement(By.name("source")));
+		driver.findElement(By.xpath(XPATH_HOME_LINK)).click();
+		Select selectsource = new Select(driver.findElement(By.name(SOURCE)));
 		selectsource.selectByVisibleText(BANGLORE);
-		Select selectdestination = new Select(driver.findElement(By.name("destination")));
+		Select selectdestination = new Select(driver.findElement(By.name(DESTINATION)));
 		selectdestination.selectByVisibleText(HYDERABAD);
-		driver.findElement(By.xpath("//button[text()='Submit']")).click();
+		driver.findElement(By.xpath(XPATH_SUBMIT_BUTTON_LINK)).click();
         String airlineName= driver.findElement(By.xpath("/html/body/table/tbody/tr[2]/td[3]")).getText();
-		driver.findElement(By.xpath("//*[contains(@href,'bookflight')]")).click();
+		driver.findElement(By.xpath(XPATH_BOOK_FLIGHT_LINK)).click();
 		driver.findElement(By.xpath("//a[@href=\"completepurchase\"]")).click();
 		
 		validateErrorMessage(driver, String.format(MESSAGE_CONFIRM_BOOKING, airlineName, BANGLORE,HYDERABAD));
@@ -118,15 +124,15 @@ public class FlightBookingTest {
 	public void verifyMemberViewConfirmBookDetails() {
 		WebDriver driver = commonHandler.homePage();
 
-		driver.findElement(By.xpath("//a[@href=\"login\"]")).click();
+		driver.findElement(By.xpath(XPATH_LOGIN_LINK)).click();
 		loginHandler.setMemberloginPage(driver, EMAILID, PASSWORD);
-		driver.findElement(By.xpath("//a[@href=\"home\"]")).click();
-		Select selectsource = new Select(driver.findElement(By.name("source")));
+		driver.findElement(By.xpath(XPATH_HOME_LINK)).click();
+		Select selectsource = new Select(driver.findElement(By.name(SOURCE)));
 		selectsource.selectByVisibleText(BANGLORE);
-		Select selectdestination = new Select(driver.findElement(By.name("destination")));
+		Select selectdestination = new Select(driver.findElement(By.name(DESTINATION)));
 		selectdestination.selectByVisibleText(HYDERABAD);
-		driver.findElement(By.xpath("//button[text()='Submit']")).click();
-		driver.findElement(By.xpath("//*[contains(@href,'bookflight')]")).click();
+		driver.findElement(By.xpath(XPATH_SUBMIT_BUTTON_LINK)).click();
+		driver.findElement(By.xpath(XPATH_BOOK_FLIGHT_LINK)).click();
 		driver.findElement(By.xpath("//a[@href=\"completepurchase\"]")).click();
 		driver.findElement(By.xpath("//a[contains(text(),'See Your Bookings')]")).click();
 		driver.close();
@@ -137,19 +143,19 @@ public class FlightBookingTest {
 	public void verifyNoSearchResltForFlightBooking() {
 		WebDriver driver = commonHandler.homePage();
 
-		driver.findElement(By.xpath("//a[@href=\"login\"]")).click();
+		driver.findElement(By.xpath(XPATH_LOGIN_LINK)).click();
 		loginHandler.setMemberloginPage(driver, EMAILID, PASSWORD);
-		driver.findElement(By.xpath("//a[@href=\"home\"]")).click();
-		Select selectsource = new Select(driver.findElement(By.name("source")));
+		driver.findElement(By.xpath(XPATH_HOME_LINK)).click();
+		Select selectsource = new Select(driver.findElement(By.name(SOURCE)));
 		selectsource.selectByVisibleText("Ahmedabad");
-		Select selectdestination = new Select(driver.findElement(By.name("destination")));
+		Select selectdestination = new Select(driver.findElement(By.name(DESTINATION)));
 		selectdestination.selectByVisibleText("Ahmedabad");
-		driver.findElement(By.xpath("//button[text()='Submit']")).click();
+		driver.findElement(By.xpath(XPATH_SUBMIT_BUTTON_LINK)).click();
 		driver.close();
 	}
 
 	private void validateErrorMessage(WebDriver driver, String expectedErrorMessage) {
-		System.out.println("expectedErrorMessage==> " + expectedErrorMessage);
+		log.info("expectedErrorMessage==> {}", expectedErrorMessage);
 		assertTrue(driver.findElement(By.tagName("body")).getAttribute("innerHTML").contains(expectedErrorMessage));
 	}
 }
